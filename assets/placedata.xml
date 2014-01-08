@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Place>
+
+    <result>
+
+        <label>
+
+        </label>
+
+        <lon>
+Berlin
+        </lon>
+
+        <lat>
+0°C
+        </lat>
+
+        <uri>
+32°F
+        </uri>
+
+        <desc>
+Snowing
+        </desc>
+
+        <street>
+5 kmph
+        </street>
+
+        <num>
+snowing
+        </num>
+
+        <img>
+img
+        </img>
+
+        <cat>
+new
+        </cat>
+    </result>
+
+    
+    <result>
+
+        <label>
+
+        </label>
+
+        <lon>
+Berlin
+        </lon>
+
+        <lat>
+0°C
+        </lat>
+
+        <uri>
+32°F
+        </uri>
+
+        <desc>
+Snowing
+        </desc>
+
+        <street>
+5 kmph
+        </street>
+
+        <num>
+snowing
+        </num>
+
+        <img>
+img
+        </img>
+
+        <cat>
+new
+        </cat>
+    </result>
+    
+</Place>
