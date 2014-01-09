@@ -1,83 +1,175 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Place>
+<place>
 
     <result>
 
         <label>
-
+Nha thuoc tu nhan 25
         </label>
 
         <lon>
-Berlin
+1.058418054E2
         </lon>
 
         <lat>
-0°C
+2.10019972E1
         </lat>
 
-        <uri>
-32°F
-        </uri>
-
-        <desc>
-Snowing
-        </desc>
-
-        <street>
-5 kmph
-        </street>
+        <cat>
+http://hust.se.vtio.owl#Pharmacies
+        </cat>
 
         <num>
-snowing
+266
         </num>
 
+        <street>
+Le Thanh Nghi street
+        </street>
+
+        <desc>
+Dược sỹ : Nguyễn Khánh Thành
+        </desc>
+
         <img>
-img
+http://diachiso.vn/Userfiles/Image/hn/shoppics/size2/le thanh nghi/even/266_1.jpg
         </img>
 
-        <cat>
-new
-        </cat>
+        <phone>
+84-4-38698114
+        </phone>
+
+        <uri>
+        </uri>
     </result>
 
-    
     <result>
 
         <label>
-
+Cong ty CP va Thuong mai duoc pham Dong Duong - Nha thuoc Dong Duong
         </label>
 
         <lon>
-Berlin
+1.058400183E2
         </lon>
 
         <lat>
-0°C
+2.10043319E1
         </lat>
 
-        <uri>
-32°F
-        </uri>
-
-        <desc>
-Snowing
-        </desc>
-
-        <street>
-5 kmph
-        </street>
+        <cat>
+http://hust.se.vtio.owl#Pharmacies
+        </cat>
 
         <num>
-snowing
+116-E2
         </num>
 
+        <street>
+Phuong Mai street
+        </street>
+
+        <desc>
+Dược sỹ: Đoàn Thái Hưng
+        </desc>
+
         <img>
-img
+http://diachiso.vn/Userfiles/Image/hn/shoppics/size2/phuong mai/even/116 e2.jpg
         </img>
 
-        <cat>
-new
-        </cat>
+        <phone>
+84-4-35659373
+        </phone>
+
+        <uri>
+        </uri>
     </result>
-    
-</Place>
+
+    <result>
+
+        <label>
+IT Cream icream shop
+        </label>
+
+        <lon>
+1.0584867153281856E2
+        </lon>
+
+        <lat>
+2.1003449705230675E1
+        </lat>
+
+        <cat>
+http://hust.se.vtio.owl#Ice-Cream-Shop
+        </cat>
+
+        <num>
+64 - 66
+        </num>
+
+        <street>
+Le Thanh Nghi street
+        </street>
+
+        <desc>
+IT Cream còn có không gian cực kỳ thoáng mát và rộng rãi đấy các bạn nhé!
+Sở hữu không gian lãng mạn tọa lạc trên tuyến phố công nghệ Lê Thanh Nghị, trung tâm của 3 trường ĐH Bách Khoa, Xây Dựng, Kinh Tế Quốc Dân, IT Cream là điểm hẹn thú vị của dân yêu thích công nghệ và các bạn học sinh, sinh viên. Không gian mang đậm chất teen, mỗi tầng là một phong cách riêng, cho bạn nhiều cảm giác mới lạ.
+Tầng 1 là không gian chung cho tất cả mọi người với bàn ghế đơn giản nhưng rất tiện lợi. Bạn có thể nhâm nhi ly café trong lúc chờ mưa tạnh hay tranh thủ thảo luận bài với bạn bè nếu chưa tới giờ lên lớp hoặc lướt web thỏa thích với mạng wifi cực nhanh hoàn toàn free nhé!
+Vì là phục vụ chủ yếu cho các bạn teen và sinh viên, nên giá cả của IT Cream cũng rất mềm, chỉ từ 8K - 20K cho một món thôi. Nhân viên phục vụ thì miễn bàn rồi, vừa trẻ trung, vừa nhiệt tình nhé! Bạn sẽ thực sự là thượng đế khi đến với IT Cream đấy! Hãy đến thưởng thức bánh kem và khám phá những điều thú vị tại IT Cream nhé các bạn!
+        </desc>
+
+        <img>
+http://i.imgur.com/sfcGM.jpg
+        </img>
+
+        <phone>
+04 36  23 09 19
+        </phone>
+
+        <uri>
+        </uri>
+    </result>
+
+    <result>
+
+        <label>
+Dai hoc Kinh te Quoc dan
+        </label>
+
+        <lon>
+1.05844846725463E2
+        </lon>
+
+        <lat>
+2.09996814336767E1
+        </lat>
+
+        <cat>
+http://hust.se.vtio.owl#University
+        </cat>
+
+        <num>
+ 207 Đường Giải Phóng - Hai Bà Trưng - Hà Nội
+        </num>
+
+        <street>
+Giai Phong street
+        </street>
+
+        <desc>
+ ĐIỂM TRÚNG TUYỂN NĂM 2011 - TRƯỜNG ĐẠI HỌC KINH TẾ QUỐC DÂN STTMã ngànhTên ngànhKhối thiĐiểm chuẩnGhi chú 1 Các ngành còn lạiA,D121 2455Theo chương trình POHE:D122Tiếng Anh nhân hệ số 2 3444Tin học kinh tếA,D118 4447Thống kê kinh doanhA,D118 5701Tiếng Anh Thương mạiD124.5Tiếng Anh nhân hệ số 2 6454Theo chương trình POHED122Tiếng Anh nhân hệ số 2 7457Quản trị kinh doanh bằng tiếng AnhD123.5Tiếng Anh nhân hệ số 2 8457Quản trị kinh doanh bằng tiếng AnhA20 9417Kinh tế nông nghiệp và phát triển nông thônA,D119 10146Công nghệ thông tinA,D118 11545Luật kinh doanhA20 12545Luật kinh doanh:D119 13421Kinh tế lao động:D119 14421Kinh tế lao độngA20 15435Quản trị kinh doanh tổng hợpA,D122.5 16426Kinh doanh quốc tếA,D122.5 17433Quản trị doanh nghiệpA,D122.5 18420Kinh tế quốc tếA,D123.5 19404Kiểm toánA,D125.5 20418Kinh tế đầu tưA,D124.5 21438Tài chính doanh nghiệpA,D125.5 22404Kế toánA,D124.5 23403Các ngành còn lạiA,D124.5 24403Tài chính ngân hàngA,D124.5 25 Điểm chuẩn vào trườngA,D121 THÔNG TIN TUYỂN SINH NĂM 2011 - TRƯỜNG ĐẠI HỌC KINH TẾ QUỐC DÂN Tên trường, tên ngành, chuyên ngành họcMã ngành quy ước để làm máy tính trong Tuyển sinhKhối thi quy ướcChỉ tiêu tuyển sinh hệ chính quyGhi chú TRƯỜNG ĐẠI HỌC KINH TẾ QUỐC DÂN 4.750- Tuyển sinh trong cả nước. Chỉ tiêu trên bao gồm cả chỉ tiêu đào tạo theo địa chỉ của các tỉnh (Theo quyết định của Bộ GD&ĐT) và từ các trường dự bị chuyển về. - Ngày thi, khối thi theo quy định của Bộ GD&ĐT. - Thí sinh đăng kí thi theo chuyên ngành với mã quy ước. - Chuyên ngành Tiếng Anh thương mại (mã 701), Lớp Quản trị lữ hành (mã: 454); Lớp Quản trị khách sạn (mã: 455), Lớp Cử nhân Quản trị kinh doanh học bằng tiếng Anh (E-BBA)-Mã: 457 điểm môn Tiếng Anh tính hệ số 2. - Thí sinh muốn biết thêm thông tin tuyển sinh của trường hoặc các thông tin về các chuyên ngành đào tạo, chương trình đào tạo để phục vụ cho việc lựa chọn đăng kí chuyên ngành, có thể xem trên trang Web của trường theo địa chỉ: http://www.neu.edu.vn. PHƯƠNG THỨC XÉT TUYỂN: 1) Xét tuyển theo chuyên ngành: Đối với các chuyên ngành đã có chỉ tiêu (417, 447, 444, 545, 146, 421). Năm 2010, điểm này thấp hơn điểm vào trường 2 đến 3 điểm. 2) Xét tuyển theo điểm sàn vào trường và theo từng khối thi . Sau đó xét tiếp vào ngành và chuyên ngành đối với các chuyên ngành không thuộc mục 1. - Nếu thí sinh đủ điểm vào chuyên ngành đã đăng kí ban đầu thì không phải đăng kí xếp chuyên ngành sau khi nhập trường. - Nếu thí sinh đủ điểm sàn vào trường theo từng khối thi nhưng không đủ điểm tuyển vào ngành/chuyên ngành đã đăng kí ban đầu thì được đăng kí vào chuyên ngành còn chỉ tiêu, cùng khối thi, khi Trường tổ chức xếp chuyên ngành (sau khi nhập trường). CÁC LỚP ĐÀO TẠO ĐẶC THÙ RIÊNG 1. Lớp Tài chính doanh nghiệp tiếng Pháp (mã: 439) . 2. Lớp Quản trị kinh doanh bằng tiếng Anh (E-BBA), Mã: 457 - Thi khối A và D1 (Tiếng Anh hệ số 2), theo đợt thi chung của Bộ. Điểm tuyển thấp hơn điểm sàn của Trường không quá 1 điểm. Thí sinh thi khối A, sau khi đạt điểm xét tuyển phải tiếp tục tham dự kỳ kiểm tra trình độ Tiếng Anh để xếp lớp. - Học phí tương đương 40 USD/tín chỉ. - Liên hệ: Viện Quản trị Kinh doanh, phòng 105 nhà 12, Đại học KTQD. ĐT: (04)38697922 – (04)38690055 – 150; Website: www.bsneu.edu.vn 3 . Lớp Quản trị lữ hành (mã: 454) và lớp Quản trị khách sạn (mã: 455) Theo Chương trình giáo dục đại học định hướng nghề nghiệp ứng dụng (Professional oriented higher education – POHE) trong khuôn khổ của Dự án Giáo dục đại học Việt Nam – Hà Lan do Bộ GD&ĐT chủ trì. - Điểm xét tuyển: Trên điểm sàn của Bộ và có thể dưới điểm sàn vào trường cùng khối thi, nhưng không quá 4 điểm. - Bằng đại học chính quy do trường ĐH KTQD cấp. - Học phí: 13,5 triệu đồng/ 1 năm (mức này có thể thay đổi để phù hợp với quy định chung). 4. Các lớp đào tạo 
+theo chương trình tiên tiến ngành Tài chính và ngành Kế toán: giảng dạy bằng tiếng Anh theo chương trình vào giáo trình của Trường ĐH tổng hợp California¸ Long Beach, Hoa Kì. 5. Các lớp chất lượng cao. Gồm các chuyên ngành: Kiểm toán, Quản trị doa
+        </desc>
+
+        <img>
+http://i.place.vn/Content/images/places/1301/dai-hoc-kinh-te-quoc-dan_small.jpg
+        </img>
+
+        <phone>
+04.36280280
+        </phone>
+
+        <uri>
+        </uri>
+    </result>
+
+</place>

@@ -17,29 +17,68 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 
-import android.util.Log;
-
+/*
+ * @author Huy Phung
+ */
 public class ServerQuery {
+	
+	private static String uri = "";
+	
+	public static void setServerURI (String uri) {
+		ServerQuery.uri = uri;
+	}
+	
+	public static String getServerUri (String uri) {
+		return ServerQuery.uri;
+	}
+	
 	/*
-	 * Querying famous places from server
-	 * 
-	 * @param
-	 * 
-	 * @return xml string data
-	 * 
-	 * @author Huy Phung
+	 * @param longtitude
+	 * @param latitude
 	 */
-	public static String getFamousPlaces() throws ClientProtocolException,
-			IOException, IllegalStateException {
-		// String query =
-		// "select ?label (sample(?lon)as ?lon)(sample(?lat)as ?lat)(sample(?num)as ?num)(sample(?street)as ?street) (sample(?desc)as ?desc) (sample(?img)as ?img) {?uri rdfs:label ?label. filter(lang(?label)='en').?uri vtio:hasLongtitude ?lon.?uri vtio:hasLatitude ?lat. ?uri vtio:hasAbstract ?desc.?uri vtio:isWellKnown \"true\"^^xsd:boolean.?uri vtio:hasMedia ?media.?media vtio:hasURL ?img . filter (regex(?img, \"png\", \"i\")||regex(?img,\"jpg\",\"i\")). optional{?uri vtio:hasLocation ?add.?add vtio:hasValue ?num.?add vtio:isPartOf ?str.?str rdfs:label ?street.filter(lang(?street)='en').}. optional{?uri vtio:hasLocation ?str.?str rdfs:label ?street. filter(lang(?street)='en').}}group by ?label";
+	public static String getNearbyPlaces(Double lon, Double lat) 
+			throws ClientProtocolException, IOException, IllegalStateException {
+		String request = "getNearbyPlaces";
+		try {
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost(uri);
+			Calendar c = Calendar.getInstance();
+			Date date = c.getTime();
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+			nameValuePairs.add(new BasicNameValuePair("request", request));
+			nameValuePairs.add(new BasicNameValuePair("lon", lon.toString()));
+			nameValuePairs.add(new BasicNameValuePair("lat", lat.toString()));
+			nameValuePairs.add(new BasicNameValuePair("date", date.toString()));
+			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			HttpResponse response = httpclient.execute(httppost);
+
+			InputStream in = response.getEntity().getContent();
+			StringBuilder stringbuilder = new StringBuilder();
+			BufferedReader bfrd = new BufferedReader(new InputStreamReader(in),1024);
+			String line;
+			while((line = bfrd.readLine()) != null)
+				stringbuilder.append(line);
+			return stringbuilder.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
+	/*
+	 * get famous places
+	 * @param
+	 * @return xml results
+	 */
+	public static String getFamousPlaces() 
+			throws ClientProtocolException, IOException, IllegalStateException {
+		
 		String query = "getFamousPlaces";
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost(
-					"http://192.168.50.140/HanoiTour/query.php");
+			HttpPost httppost = new HttpPost(uri);
 			Calendar c = Calendar.getInstance();
 			Date date = c.getTime();
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -49,28 +88,50 @@ public class ServerQuery {
 			HttpResponse response = httpclient.execute(httppost);
 
 			InputStream in = response.getEntity().getContent();
-	        StringBuilder stringbuilder = new StringBuilder();
-	        BufferedReader bfrd = new BufferedReader(new InputStreamReader(in),1024);
-	        String line;
-	        while((line = bfrd.readLine()) != null)
-	            stringbuilder.append(line);
-	        Log.e("http response", stringbuilder.toString());
-	        return stringbuilder.toString();
-	        
-			//return EntityUtils.toString(response.getEntity());
+			StringBuilder stringbuilder = new StringBuilder();
+			BufferedReader bfrd = new BufferedReader(new InputStreamReader(in),1024);
+			String line;
+			while((line = bfrd.readLine()) != null)
+				stringbuilder.append(line);
+			return stringbuilder.toString();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
+	/*
+	 * search places by keyword
+	 * @param keyword
+	 * @return xml
+	 */
 	public static String searchForPlace(String keyword)
 			throws ClientProtocolException, IOException, IllegalStateException {
-		/*
-		 * TODO
-		 * search by keyword
-		 */
-		return null;
-	}
+		String query = "getPlacesByKeyword";
+		try {
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost(uri);
+			Calendar c = Calendar.getInstance();
+			Date date = c.getTime();
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+			nameValuePairs.add(new BasicNameValuePair("request", query));
+			nameValuePairs.add(new BasicNameValuePair("keyword", keyword));
+			nameValuePairs.add(new BasicNameValuePair("date", date.toString()));
+			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			HttpResponse response = httpclient.execute(httppost);
 
+			InputStream in = response.getEntity().getContent();
+			StringBuilder stringbuilder = new StringBuilder();
+			BufferedReader bfrd = new BufferedReader(new InputStreamReader(in),1024);
+			String line;
+			while((line = bfrd.readLine()) != null)
+				stringbuilder.append(line);
+			return stringbuilder.toString();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

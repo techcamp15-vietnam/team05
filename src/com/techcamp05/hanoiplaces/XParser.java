@@ -21,7 +21,8 @@ public class XParser extends DefaultHandler {
 	ArrayList<String> descList = new ArrayList<String>();
 	ArrayList<String> imgList = new ArrayList<String>();
 	ArrayList<String> catList = new ArrayList<String>();
-
+	ArrayList<String> phoneList = new ArrayList<String>();
+	
 	// temp variable to store the data chunk read while parsing
 	private String tempStore = null;
 
@@ -58,6 +59,8 @@ public class XParser extends DefaultHandler {
 			tempStore = "";
 		} else if (localName.equalsIgnoreCase("cat")) {
 			tempStore = "";
+		} else if (localName.equalsIgnoreCase("phone")) {
+			tempStore = "";
 		} else {
 			tempStore = "";
 		}
@@ -85,6 +88,8 @@ public class XParser extends DefaultHandler {
 			imgList.add(tempStore);
 		} else if (localName.equalsIgnoreCase("cat")) {
 			catList.add(tempStore);
+		} else if (localName.equalsIgnoreCase("phone")) {
+			phoneList.add(tempStore);
 		}
 		tempStore = "";
 	}

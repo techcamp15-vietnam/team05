@@ -2,31 +2,13 @@ package com.techcamp05.hanoiplaces;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -35,23 +17,38 @@ import org.xml.sax.InputSource;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.DownloadManager.Query;
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.database.Cursor;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements ConnectionCallbacks,
+		OnConnectionFailedListener, LocationListener {
 
 	// XML node keys
 	static final String KEY_TAG = "result";
+
 	static final String KEY_LABEL = "label";
 	static final String KEY_LON = "lon";
 	static final String KEY_LAT = "lat";
@@ -61,6 +58,7 @@ public class MainActivity extends Activity {
 	static final String KEY_DESC = "desc";
 	static final String KEY_IMG = "img";
 	static final String KEY_CAT = "cat";
+	static final String KEY_PHONE = "phone";
 
 	// List items
 	ListView list;
@@ -68,8 +66,26 @@ public class MainActivity extends Activity {
 	List<HashMap<String, String>> placeDataCollection;
 	String xmlString = "";
 
+	// GoogleAPI querying
+	public SearchView searchView;
+	public String search_query;
+
+	private LocationClient mLocationClient;
+	private TextView mMessageView;
+	private TextView resultText;
+
+	public double lonLocation;
+	public double latLocation;
+	
+	// Request for a location
+	private static final LocationRequest REQUEST = LocationRequest.create()
+			.setInterval(5000) // 5 seconds
+			.setFastestInterval(16) // 16ms = 60fps
+			.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
 	/*
 	 * Testing function
+	 * @author Huy Phung
 	 */
 	public String getXmlData() {
 		return null;
@@ -91,32 +107,22 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		StrictMode.ThreadPolicy policy = new
-				StrictMode.ThreadPolicy.Builder().permitAll().build();
-				StrictMode.setThreadPolicy(policy);
-				
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+
 		try {
-			// Doc building from sample data
-			// sample data will be replaced by service consuming later
 			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 
-			//new GetData().execute();
-			xmlString = ServerQuery.getFamousPlaces();
-			
+			ServerQuery
+					.setServerURI("http://192.168.1.103/HanoiTour/query.php");
+			xmlString = ServerQuery.getNearbyPlaces(21.05, 105.55);
+
 			InputSource is = new InputSource(new StringReader(xmlString));
 			Document doc = docBuilder.parse(is);
-//
-//			TransformerFactory transformerFactory = TransformerFactory
-//					.newInstance();
-//			Transformer transformer = transformerFactory.newTransformer();
-//			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-//			Writer out = new StringWriter();
-//			transformer.transform(new DOMSource(doc), new StreamResult(out));
-//			System.out.println(out.toString());
-//			doc = docBuilder.parse(new InputSource(new StringReader(out.toString())));
-			
+
 			placeDataCollection = new ArrayList<HashMap<String, String>>();
 
 			// normalize text representation
@@ -169,8 +175,7 @@ public class MainActivity extends Activity {
 					Element firstUriElement = (Element) uriList.item(0);
 					NodeList textUriList = firstUriElement.getChildNodes();
 					// --uri
-					Log.e("null", ((Node) textUriList.item(0))
-							.getNodeValue());
+					Log.e("null", ((Node) textUriList.item(0)).getNodeValue());
 					map.put(KEY_URI, ((Node) textUriList.item(0))
 							.getNodeValue().trim());
 
@@ -220,6 +225,15 @@ public class MainActivity extends Activity {
 					map.put(KEY_CAT, ((Node) textCatList.item(0))
 							.getNodeValue().trim());
 
+					// 10.-------
+					NodeList phoneList = firstPlaceElement
+							.getElementsByTagName(KEY_PHONE);
+					Element firstPhoneElement = (Element) phoneList.item(0);
+					NodeList textPhoneList = firstPhoneElement.getChildNodes();
+					// --phone
+					map.put(KEY_PHONE, ((Node) textPhoneList.item(0))
+							.getNodeValue().trim());
+
 					// Add to the Arraylist
 					placeDataCollection.add(map);
 				}
@@ -265,14 +279,16 @@ public class MainActivity extends Activity {
 							placeDataCollection.get(position).get(KEY_IMG));
 					i.putExtra("cat",
 							placeDataCollection.get(position).get(KEY_CAT));
-
+					i.putExtra("phone",
+							placeDataCollection.get(position).get(KEY_PHONE));
 					startActivity(i);
 				}
 			});
 
-		}
+			resultText = (TextView) findViewById(R.id.text_view_search);
+			setupSearchView();
 
-		catch (IOException ex) {
+		} catch (IOException ex) {
 			ex.printStackTrace();
 			Log.e("Error in MainActivity", "IOException " + ex.getMessage());
 		} catch (Exception ex) {
@@ -283,8 +299,8 @@ public class MainActivity extends Activity {
 	}
 
 	/*
-	 * @author Huy Phung
-	 * (non-Javadoc)
+	 * @author Huy Phung (non-Javadoc)
+	 * 
 	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
 	 */
 	@Override
@@ -293,40 +309,127 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-//	private class GetData extends AsyncTask<Void, Void, String> {
-//		@Override
-//		protected String doInBackground(Void... params) {
-//
-//			try {
-//				String query = "getFamousPlaces";
-//				HttpClient httpclient = new DefaultHttpClient();
-//				HttpPost httppost = new HttpPost(
-//						"http://192.168.50.140/HanoiTour/query.php");
-//				Calendar c = Calendar.getInstance();
-//				Date date = c.getTime();
-//				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-//				nameValuePairs.add(new BasicNameValuePair("request", query));
-//				nameValuePairs.add(new BasicNameValuePair("date", date
-//						.toString()));
-//				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-//				HttpResponse response = httpclient.execute(httppost);
-//				xmlString += EntityUtils.toString(response.getEntity(),"UTF-8");
-//				xmlString = xmlString.replaceAll("\\r\\n", " ");
-//				xmlString.replaceFirst(".$","");
-//				Log.e("HTTP", xmlString);
-//
-//			} catch (ClientProtocolException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (IllegalStateException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			return null;
-//		}
-	
+	/*
+	 * search view init
+	 * @param
+	 * @return
+	 * @author Tung Tran
+	 */
+	private void setupSearchView() {
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		final SearchView searchView = (SearchView) findViewById(R.id.search_place);
+		SearchableInfo searchableInfo = searchManager
+				.getSearchableInfo(getComponentName());
+		searchView.setSearchableInfo(searchableInfo);
+	}
 
+	/*
+	 * @author Tung Tran
+	 * (non-Javadoc)
+	 * @see android.app.Activity#onNewIntent(android.content.Intent)
+	 */
+	protected void onNewIntent(Intent intent) {
+		if (ContactsContract.Intents.SEARCH_SUGGESTION_CLICKED.equals(intent
+				.getAction())) {
+			// handles suggestion clicked query
+			String displayName = getDisplayNameForContact(intent);
+			resultText.setText(displayName);
+		} else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			// handles a search query
+			String query = intent.getStringExtra(SearchManager.QUERY);
+			resultText.setText("should search for query: '" + query + "'...");
+		}
+	}
+
+	/*
+	 * @param intent
+	 * @return name
+	 * @author Tung Tran
+	 */
+	private String getDisplayNameForContact(Intent intent) {
+		Cursor phoneCursor = getContentResolver().query(intent.getData(), null,
+				null, null, null);
+		phoneCursor.moveToFirst();
+		int idDisplayName = phoneCursor
+				.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
+		String name = phoneCursor.getString(idDisplayName);
+		phoneCursor.close();
+		return name;
+	}
+
+	protected void onResume() {
+		super.onResume();
+		setUpLocationClientIfNeeded();
+		mLocationClient.connect();
+	}
+
+	public void onPause() {
+		super.onPause();
+		if (mLocationClient != null) {
+			mLocationClient.disconnect();
+		}
+	}
+
+	@SuppressWarnings("unused")
+	private void setUpLocationClientIfNeeded() {
+		if (mLocationClient == null) {
+			mLocationClient = new LocationClient(getApplicationContext(), this, // ConnectionCallbacks
+					this); // OnConnectionFailedListener
+		}
+	}
+
+
+	/* 
+	 * use mLocationClient.getLastLocation to get the last location has been specify by google service
+	 * @author Tung Tran
+	 */
+	public void showMyLocation(View view) {
+		
+		if (mLocationClient != null && mLocationClient.isConnected()) {
+			latLocation = mLocationClient.getLastLocation().getLatitude();
+			lonLocation = mLocationClient.getLastLocation().getLongitude();
+			String msg = "Location = " + mLocationClient.getLastLocation();
+			Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT)
+					.show();
+			mMessageView.setText(msg);
+		}
+	}
+
+	/**
+	 * Implementation of {@link LocationListener}.
+	 * @author Tung Tran
+	 */
+	@Override
+	public void onLocationChanged(Location location) {
+		mMessageView.setText("Location = " + location);
+	}
+
+	/**
+	 * Callback called when connected to GCore. Implementation of
+	 * {@link ConnectionCallbacks}.
+	 * @author Tung Tran
+	 */
+	@Override
+	public void onConnected(Bundle connectionHint) {
+		mLocationClient.requestLocationUpdates(REQUEST, this); // LocationListener
+	}
+
+	/**
+	 * Callback called when disconnected from GCore. Implementation of
+	 * {@link ConnectionCallbacks}.
+	 * @author Tung Tran
+	 */
+	@Override
+	public void onDisconnected() {
+		// Do nothing
+	}
+
+	/**
+	 * Implementation of {@link OnConnectionFailedListener}.
+	 * @author Tung Tran
+	 */
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		// Do nothing
+	}
 }

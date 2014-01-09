@@ -7,13 +7,10 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 
-import com.techcamp05.hanoiplaces.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +19,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/*
+ * Binding XML data
+ * @author Huy Phung
+ */
 public class BinderData extends BaseAdapter {
 
 	// XML node keys
@@ -34,12 +35,14 @@ public class BinderData extends BaseAdapter {
 	static final String KEY_NUM = "num";
 	static final String KEY_DESC = "desc";
 	static final String KEY_IMG = "img";
-
+	static final String KEY_CAT = "cat";
+	static final String KEY_PHONE = "phone";
+	
 	LayoutInflater inflater;
 	ImageView thumb_image;
 	List<HashMap<String,String>> placeDataCollection;
 	ViewHolder holder;
-	
+	ImageLoader mImageLoader;
 	public BinderData() {
 		// TODO Auto-generated constructor stub
 	}
@@ -50,6 +53,7 @@ public class BinderData extends BaseAdapter {
 
 		inflater = (LayoutInflater) act
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mImageLoader = new ImageLoader(act);
 	}
 
 
@@ -81,7 +85,7 @@ public class BinderData extends BaseAdapter {
 			holder.tvStreet = (TextView)vi.findViewById(R.id.tvStreet);
 			holder.tvNum =  (TextView)vi.findViewById(R.id.tvNum); 
 			holder.tvImage =(ImageView)vi.findViewById(R.id.list_image); // thumb image
-
+			
 			vi.setTag(holder);
 		}
 		else{
@@ -89,19 +93,41 @@ public class BinderData extends BaseAdapter {
 		}
 
 		// Setting all values in listview
-
 		holder.tvLabel.setText(placeDataCollection.get(position).get(KEY_LABEL));
 		holder.tvStreet.setText(placeDataCollection.get(position).get(KEY_STREET));
 		holder.tvNum.setText(placeDataCollection.get(position).get(KEY_NUM));
 
 		//Setting an image
-		//   String uri = placeDataCollection.get(position).get(KEY_IMG);
-		// int imageResource = vi.getContext().getApplicationContext().getResources().getIdentifier(uri, null, vi.getContext().getApplicationContext().getPackageName());
-		//Drawable image = vi.getContext().getResources().getDrawable(imageResource);
-		//holder.tvImage.setImageDrawable(image)
+		String url = placeDataCollection.get(position).get(KEY_IMG);
+		mImageLoader.DisplayImage(url, holder.tvImage);
 		return vi;
 	}
 
+	public Bitmap getBitmapFromURL(String src) {
+		try {
+			URL url = new URL(src);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setDoInput(true);
+			connection.connect();
+			InputStream input = connection.getInputStream();
+			Bitmap myBitmap = BitmapFactory.decodeStream(input);
+			return myBitmap;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}catch(Exception e){
+			Log.e("Error","" + e.getMessage());
+			return null;
+		}
+	}
+	
+	Runnable runnable = new Runnable() {
+		
+		@Override
+		public void run() {
+			
+		}
+	};
 	static class ViewHolder{
 
 		TextView tvLabel;
@@ -111,4 +137,3 @@ public class BinderData extends BaseAdapter {
 	}
 
 }
-
