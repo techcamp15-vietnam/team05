@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+//
 /*
  * Binding XML data
  * @author Huy Phung
@@ -37,14 +37,19 @@ public class BinderData extends BaseAdapter {
 	static final String KEY_IMG = "img";
 	static final String KEY_CAT = "cat";
 	static final String KEY_PHONE = "phone";
-	
+//	
 	LayoutInflater inflater;
 	ImageView thumb_image;
-	List<HashMap<String,String>> placeDataCollection;
+	List<HashMap<String, String>> placeDataCollection;
 	ViewHolder holder;
 	ImageLoader mImageLoader;
 	public BinderData() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void refreshList(List<HashMap<String, String>> list){
+		this.placeDataCollection = list;
+		notifyDataSetChanged();
 	}
 
 	public BinderData(Activity act, List<HashMap<String,String>> map) {

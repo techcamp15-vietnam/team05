@@ -134,4 +134,38 @@ public class ServerQuery {
 			return null;
 		}
 	}
+	
+	/*
+	 * search places by keyword
+	 * @param keyword
+	 * @return xml
+	 */
+	public static String getPlacesByCategory(String cat)
+			throws ClientProtocolException, IOException, IllegalStateException {
+		String query = "getPlacesByCat";
+		try {
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost(uri);
+			Calendar c = Calendar.getInstance();
+			Date date = c.getTime();
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+			nameValuePairs.add(new BasicNameValuePair("request", query));
+			nameValuePairs.add(new BasicNameValuePair("cat", cat));
+			nameValuePairs.add(new BasicNameValuePair("date", date.toString()));
+			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			HttpResponse response = httpclient.execute(httppost);
+
+			InputStream in = response.getEntity().getContent();
+			StringBuilder stringbuilder = new StringBuilder();
+			BufferedReader bfrd = new BufferedReader(new InputStreamReader(in),1024);
+			String line;
+			while((line = bfrd.readLine()) != null)
+				stringbuilder.append(line);
+			return stringbuilder.toString();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
