@@ -106,7 +106,7 @@ public class ServerQuery {
 	 * @param keyword
 	 * @return xml
 	 */
-	public static String searchForPlace(String keyword)
+	public static String getPlacesByKeyword(String keyword)
 			throws ClientProtocolException, IOException, IllegalStateException {
 		String query = "getPlacesByKeyword";
 		try {

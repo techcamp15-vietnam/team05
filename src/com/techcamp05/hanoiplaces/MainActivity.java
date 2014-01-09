@@ -117,9 +117,9 @@ public class MainActivity extends Activity implements ConnectionCallbacks,
 			DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 
 			ServerQuery
-					.setServerURI("http://192.168.1.103/HanoiTour/query.php");
-			xmlString = ServerQuery.getNearbyPlaces(21.05, 105.55);
-
+					.setServerURI("http://192.168.50.140/HanoiTour/query.php");
+			xmlString = ServerQuery.getPlacesByKeyword("dai hoc");
+			//xmlString = ServerQuery.getFamousPlaces();
 			InputSource is = new InputSource(new StringReader(xmlString));
 			Document doc = docBuilder.parse(is);
 

@@ -4,6 +4,7 @@
     <string name="app_name">HanoiPlaces</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="findContact">Find contact.</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_places">HanoiPlaces</string>
 	<string name="Separator">---</string>
