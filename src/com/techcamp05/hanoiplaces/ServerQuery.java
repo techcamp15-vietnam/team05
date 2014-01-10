@@ -23,6 +23,16 @@ import org.apache.http.message.BasicNameValuePair;
  */
 public class ServerQuery {
 	
+	private static double radius;
+	
+	public static double getRadius() {
+		return radius;
+	}
+
+	public static void setRadius(double radius) {
+		ServerQuery.radius = radius;
+	}
+
 	private static String uri = "";
 	
 	public static void setServerURI (String uri) {
@@ -49,6 +59,7 @@ public class ServerQuery {
 			nameValuePairs.add(new BasicNameValuePair("request", request));
 			nameValuePairs.add(new BasicNameValuePair("lon", lon.toString()));
 			nameValuePairs.add(new BasicNameValuePair("lat", lat.toString()));
+			nameValuePairs.add(new BasicNameValuePair("radius", Double.toString(radius)));
 			nameValuePairs.add(new BasicNameValuePair("date", date.toString()));
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);
@@ -106,7 +117,7 @@ public class ServerQuery {
 	 * @param keyword
 	 * @return xml
 	 */
-	public static String getPlacesByKeyword(String keyword)
+	public static String getPlacesByKeyword(String keyword, Double lon, Double lat)
 			throws ClientProtocolException, IOException, IllegalStateException {
 		String query = "getPlacesByKeyword";
 		try {
@@ -114,8 +125,11 @@ public class ServerQuery {
 			HttpPost httppost = new HttpPost(uri);
 			Calendar c = Calendar.getInstance();
 			Date date = c.getTime();
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs.add(new BasicNameValuePair("request", query));
+			nameValuePairs.add(new BasicNameValuePair("lon", lon.toString()));
+			nameValuePairs.add(new BasicNameValuePair("lat", lat.toString()));
+			nameValuePairs.add(new BasicNameValuePair("radius", Double.toString(radius)));
 			nameValuePairs.add(new BasicNameValuePair("keyword", keyword));
 			nameValuePairs.add(new BasicNameValuePair("date", date.toString()));
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -148,11 +162,12 @@ public class ServerQuery {
 			HttpPost httppost = new HttpPost(uri);
 			Calendar c = Calendar.getInstance();
 			Date date = c.getTime();
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 			nameValuePairs.add(new BasicNameValuePair("request", query));
 			nameValuePairs.add(new BasicNameValuePair("cat", cat));
 			nameValuePairs.add(new BasicNameValuePair("lon", lon.toString()));
 			nameValuePairs.add(new BasicNameValuePair("lat", lat.toString()));
+			nameValuePairs.add(new BasicNameValuePair("radius", Double.toString(radius)));
 			nameValuePairs.add(new BasicNameValuePair("date", date.toString()));
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);

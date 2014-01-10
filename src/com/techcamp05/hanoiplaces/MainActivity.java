@@ -70,7 +70,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks,
 	static final String KEY_CAT = "cat";
 	static final String KEY_PHONE = "phone";
 	
-	private String distance;
+	
 
 	// List items
 	ListView list;
@@ -143,26 +143,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks,
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				final Dialog dialog_near_by = new Dialog(context);
-				dialog_near_by.setContentView(R.layout.near_by);
-				dialog_near_by.setTitle("Set distance");
 				
-				
-				//set component in dialog_near_by
-				final EditText editDistance = (EditText) dialog_near_by.findViewById(R.id.edit_distance);
-				
-				Button distBut = (Button) dialog_near_by.findViewById(R.id.submit_distance);
-				distBut.setOnClickListener(new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						dialog_near_by.dismiss();
-						distance = editDistance.getText().toString();
-						Log.e("BOX check", distance);
-					}
-				});
-				dialog_near_by.show();
 				searchNearbyPlaces();
 			}
 		});
@@ -973,7 +954,12 @@ public class MainActivity extends Activity implements ConnectionCallbacks,
 			String query = intent.getStringExtra(SearchManager.QUERY);
 
 			try {
-				String xmlString = ServerQuery.getPlacesByKeyword(query);
+				LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+				Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+				Log.e("GPS debugging ", location.getLongitude() + " " + location.getLatitude());
+				
+				String xmlString = ServerQuery.getPlacesByKeyword(query, location.getLongitude(), location.getLatitude());
+				//String xmlString = ServerQuery.getPlacesByKeyword(query);
 				DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory
 						.newInstance();
 				DocumentBuilder docBuilder = docBuilderFactory
