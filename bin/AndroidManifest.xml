@@ -9,7 +9,7 @@
         android:minSdkVersion="11"
         android:targetSdkVersion="19" />
 
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    
     <uses-permission
         android:name="com.techcamp05.hanoiplaces.maps.googlev2.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />

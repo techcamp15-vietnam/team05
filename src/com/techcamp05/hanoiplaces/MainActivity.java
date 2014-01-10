@@ -37,6 +37,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -68,6 +69,8 @@ public class MainActivity extends Activity implements ConnectionCallbacks,
 	static final String KEY_IMG = "img";
 	static final String KEY_CAT = "cat";
 	static final String KEY_PHONE = "phone";
+	
+	private String distance;
 
 	// List items
 	ListView list;
@@ -143,6 +146,23 @@ public class MainActivity extends Activity implements ConnectionCallbacks,
 				final Dialog dialog_near_by = new Dialog(context);
 				dialog_near_by.setContentView(R.layout.near_by);
 				dialog_near_by.setTitle("Set distance");
+				
+				
+				//set component in dialog_near_by
+				final EditText editDistance = (EditText) dialog_near_by.findViewById(R.id.edit_distance);
+				
+				Button distBut = (Button) dialog_near_by.findViewById(R.id.submit_distance);
+				distBut.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						dialog_near_by.dismiss();
+						distance = editDistance.getText().toString();
+						Log.e("BOX check", distance);
+					}
+				});
+				dialog_near_by.show();
 				searchNearbyPlaces();
 			}
 		});

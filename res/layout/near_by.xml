@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center" >
-    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
     <TextView 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -11,13 +14,15 @@
         android:text="Input the distance you want"
         android:textSize="15dp"/>
     <EditText 
+        android:id="@+id/edit_distance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         />
-    <Button 
+    <Button
+        android:id="@+id/submit_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"/>
-    
+    </LinearLayout>
 </RelativeLayout>
