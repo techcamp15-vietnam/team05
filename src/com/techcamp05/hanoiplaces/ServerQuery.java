@@ -140,7 +140,7 @@ public class ServerQuery {
 	 * @param keyword
 	 * @return xml
 	 */
-	public static String getPlacesByCategory(String cat)
+	public static String getPlacesByCategory(String cat, Double lon, Double lat)
 			throws ClientProtocolException, IOException, IllegalStateException {
 		String query = "getPlacesByCat";
 		try {
@@ -148,9 +148,11 @@ public class ServerQuery {
 			HttpPost httppost = new HttpPost(uri);
 			Calendar c = Calendar.getInstance();
 			Date date = c.getTime();
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
 			nameValuePairs.add(new BasicNameValuePair("request", query));
 			nameValuePairs.add(new BasicNameValuePair("cat", cat));
+			nameValuePairs.add(new BasicNameValuePair("lon", lon.toString()));
+			nameValuePairs.add(new BasicNameValuePair("lat", lat.toString()));
 			nameValuePairs.add(new BasicNameValuePair("date", date.toString()));
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = httpclient.execute(httppost);

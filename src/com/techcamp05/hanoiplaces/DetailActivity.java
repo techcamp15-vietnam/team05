@@ -49,6 +49,8 @@ public class DetailActivity extends FragmentActivity {
 	TextView tvStreet;
 	TextView tvNum;
 	TextView tvCat;
+	TextView tvDesc;
+	TextView tvPhone;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -62,8 +64,9 @@ public class DetailActivity extends FragmentActivity {
 			tvLabel = (TextView) findViewById(R.id.textViewLabel);
 			tvStreet = (TextView) findViewById(R.id.textViewStreet);
 			// tvNum = (TextView) findViewById(R.id.textViewWindNum);
-			tvCat = (TextView) findViewById(R.id.textView1);
-
+			tvCat = (TextView) findViewById(R.id.textViewCat);
+			tvDesc = (TextView) findViewById(R.id.textView1);
+			tvPhone = (TextView)findViewById(R.id.test_view1);
 			// Get position to display
 			Intent i = getIntent();
 
@@ -81,7 +84,10 @@ public class DetailActivity extends FragmentActivity {
 			// text elements
 			tvLabel.setText(label);
 			tvStreet.setText(street);
-			tvCat.setText(desc);
+			tvCat.setText(cat);
+			tvDesc.setText(desc);
+			phone = "Phone: " + phone;
+			tvPhone.setText(phone);			
 			
 			String url = this.img;
 			new LoadImage((ImageView) findViewById(R.id.imageView))
@@ -94,6 +100,8 @@ public class DetailActivity extends FragmentActivity {
 		}
 	}
 
+	
+	
 	class LoadImage extends AsyncTask<String, Void, Boolean> {
 
 		ImageView imgv;

@@ -37,7 +37,7 @@
         <!-- description of google key android application -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyAd41MAV6_cXZNTqSSazP7oiEOoKZP4G10" />
+            android:value="AIzaSyDSzPz1RPjYnJKlX9dPTCc-odFcIPF1kaE" />l
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
